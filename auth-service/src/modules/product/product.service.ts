@@ -1,5 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product } from './schemas/product.schemas';
 import { CreateProductDto, UpdateProductDto } from './dto/product.dto';
@@ -10,33 +14,58 @@ export class ProductService {
     @InjectModel(Product.name) private productModel: Model<Product>,
   ) {}
 
-  async createProduct(createProductDto: CreateProductDto): Promise<Product> {
-    const createdProduct = new this.productModel(createProductDto);
-    return createdProduct.save();
+  async createProduct(
+    createProductDto: CreateProductDto,
+  ): Promise<Types.ObjectId> {
+    try {
+      const createdProduct = new this.productModel(createProductDto);
+      return (await createdProduct.save())._id;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   async getProductById(productId: string) {
-    return this.productModel.findOne({ _id: productId, isDeleted: false });
+    try {
+      return this.productModel.findOne(
+        { _id: productId, isDeleted: false },
+        '-_id -__v',
+      );
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
   }
 
   async getAllProducts() {
-    return this.productModel.find({ isDeleted: false });
+    try {
+      return this.productModel.find({ isDeleted: false });
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
   }
 
   async updateProduct(
     productId: string,
     newProductData: UpdateProductDto,
   ): Promise<Product> {
-    return this.productModel.findByIdAndUpdate(productId, newProductData, {
-      new: true,
-    });
+    try {
+      return this.productModel.findByIdAndUpdate(productId, newProductData, {
+        new: true,
+      });
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   async deleteProductById(productId: string): Promise<Product> {
-    return this.productModel.findByIdAndUpdate(
-      productId,
-      { isDeleted: true },
-      { new: true },
-    );
+    try {
+      return this.productModel.findByIdAndUpdate(
+        productId,
+        { isDeleted: true },
+        { new: true },
+      );
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }
