@@ -5,15 +5,22 @@ import {
 } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schemas/user.schemas';
-import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import { Users } from './schemas/users.schemas';
+import { CreateUsersDto, UpdateUsersDto } from './dto/users.dto';
 
 @Injectable()
-export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+export class UsersService {
+  constructor(@InjectModel(Users.name) private userModel: Model<Users>) {}
 
-  async createUser(createUserDto: CreateUserDto): Promise<Types.ObjectId> {
+  async createUser(createUserDto: CreateUsersDto): Promise<Types.ObjectId> {
     try {
+      const existingUser = await this.userModel.findOne({
+        userName: createUserDto.userName,
+      });
+      if (existingUser) {
+        throw new BadRequestException('Username is already in use.');
+      }
+
       const createdUser = new this.userModel(createUserDto);
       return (await createdUser.save())._id;
     } catch (error) {
@@ -32,6 +39,17 @@ export class UserService {
     }
   }
 
+  async getUserByUserName(userName: string) {
+    try {
+      return this.userModel.findOne(
+        { userName, isDeleted: false },
+        '-_id -__v',
+      );
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
+  }
+
   async getAllUsers() {
     try {
       return this.userModel.find({ isDeleted: false });
@@ -40,7 +58,10 @@ export class UserService {
     }
   }
 
-  async updateUser(userId: string, newUserData: UpdateUserDto): Promise<User> {
+  async updateUser(
+    userId: string,
+    newUserData: UpdateUsersDto,
+  ): Promise<Users> {
     try {
       return this.userModel.findByIdAndUpdate(userId, newUserData, {
         new: true,
@@ -50,7 +71,7 @@ export class UserService {
     }
   }
 
-  async deleteUserById(userId: string): Promise<User> {
+  async deleteUserById(userId: string): Promise<Users> {
     try {
       return this.userModel.findByIdAndUpdate(
         userId,

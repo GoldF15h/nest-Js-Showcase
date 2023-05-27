@@ -4,21 +4,33 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsMongoId,
+  IsBoolean,
 } from 'class-validator';
 
 export class CreateOrderDto {
-  @IsString()
   @IsNotEmpty()
   orderId: string;
 
-  @IsArray()
-  @ArrayNotEmpty()
-  @IsString({ each: true })
-  productIds: string[];
+  @IsMongoId()
+  customer: string;
 
-  @IsString()
   @IsNotEmpty()
-  customerId: string;
+  createdAt: Date;
+
+  @IsNotEmpty()
+  updatedAt: Date;
+
+  @IsArray()
+  @IsMongoId({ each: true })
+  products: string[];
+
+  @IsBoolean()
+  isDeleted: boolean;
+
+  @IsNotEmpty()
+  @IsString()
+  status: string;
 }
 
 export class UpdateOrderDto {
@@ -26,16 +38,29 @@ export class UpdateOrderDto {
   id: string;
 
   @IsOptional()
-  @IsString()
+  @IsNotEmpty()
   orderId?: string;
 
   @IsOptional()
+  @IsMongoId()
+  customer?: string;
+
+  @IsOptional()
+  createdAt?: Date;
+
+  @IsOptional()
+  updatedAt?: Date;
+
+  @IsOptional()
   @IsArray()
-  @ArrayNotEmpty()
-  @IsString({ each: true })
-  productIds?: string[];
+  @IsMongoId({ each: true })
+  products?: string[];
+
+  @IsOptional()
+  @IsBoolean()
+  isDeleted?: boolean;
 
   @IsOptional()
   @IsString()
-  customerId?: string;
+  status?: string;
 }

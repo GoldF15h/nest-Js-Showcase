@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreateUserDto {
+export class CreateUsersDto {
   @IsString()
   @IsNotEmpty()
   userName: string;
@@ -22,7 +22,7 @@ export class CreateUserDto {
   password: string;
 }
 
-export class UpdateUserDto {
+export class UpdateUsersDto {
   @IsNotEmpty()
   id: string;
 
