@@ -10,10 +10,4 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-
-  @EventPattern('get_user')
-  handleUserCreated(data: any) {
-    this.appService.handleUserCreated(data);
-    throw new BadRequestException();
-  }
 }

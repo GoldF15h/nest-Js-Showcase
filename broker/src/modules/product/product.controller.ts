@@ -43,10 +43,7 @@ export class ProductController {
   @UseGuards(AdminAuthGuard)
   @Put()
   async updateProduct(@Body() updateProductDto: UpdateProductDto) {
-    return await this.productService.updateProduct(
-      updateProductDto.id,
-      updateProductDto,
-    );
+    return await this.productService.updateProduct(updateProductDto);
   }
 
   // delete product

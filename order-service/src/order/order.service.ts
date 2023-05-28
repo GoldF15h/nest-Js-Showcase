@@ -42,7 +42,7 @@ export class OrderService {
 
   async getAllOrdersByID(id: string) {
     try {
-      return this.orderModel.find({ _id: id, isDeleted: false });
+      return this.orderModel.find({ customer: id, isDeleted: false });
     } catch (error) {
       throw new NotFoundException(error.message);
     }

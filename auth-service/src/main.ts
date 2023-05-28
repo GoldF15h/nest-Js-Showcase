@@ -1,17 +1,20 @@
 import { NestFactory } from '@nestjs/core';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+
+const PORT = 3001;
 
 async function bootstrap() {
-  if (!process.env.PORT) {
-    console.log('ENV ERROR');
-    return;
-  }
-  console.log(`app listening on port ${process.env.PORT}`);
-  const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(
-    new ValidationPipe({ disableErrorMessages: false, whitelist: true }),
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AppModule,
+    {
+      transport: Transport.TCP,
+      options: {
+        port: PORT,
+      },
+    },
   );
-  await app.listen(process.env.PORT);
+  await app.listen();
+  console.log(`Microservices is listening on port : ${PORT}`);
 }
 bootstrap();

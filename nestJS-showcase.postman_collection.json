@@ -1,0 +1,744 @@
+{
+	"info": {
+		"_postman_id": "4713607e-af3d-4f56-93c0-979d689343ed",
+		"name": "nestJS-showcase",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20016924"
+	},
+	"item": [
+		{
+			"name": "Auth service",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"normal_user_2\",\n    \"password\" : \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/auth/login",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/auth/profile",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"auth",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User service",
+			"item": [
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userName\": \"normal_user_6\",\n  \"firstName\": \"asd\",\n  \"lastName\": \"lastName\",\n  \"email\": \"asd@gmail.com\",\n  \"password\": \"password\",\n  \"hello\":\"hello\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/user",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create admin user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userName\": \"admin33\",\n  \"firstName\": \"asd\",\n  \"lastName\": \"lastName\",\n  \"email\": \"asd@gmail.com\",\n  \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/user/admin",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"user",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/user/64735614dab48cd38ef5639d",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"user",
+								"64735614dab48cd38ef5639d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/user",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\":\"64735614dab48cd38ef5639d\",\n  \"firstName\": \"updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/user",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/user/64735614dab48cd38ef5639d",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"user",
+								"64735614dab48cd38ef5639d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product service",
+			"item": [
+				{
+					"name": "Create product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productName\": \"NAME53\",\n  \"productType\": \"type\",\n  \"quantity\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/product",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get product by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/product/6473562973c8542d943488a8",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"product",
+								"6473562973c8542d943488a8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/product",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"64734c8850e40a837c434c2a\",\n    \"productName\": \"UPDATENAME\",\n    \"productType\": \"type\",\n    \"quantity\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/product",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/product/64734c8850e40a837c434c2a",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"product",
+								"64734c8850e40a837c434c2a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order service",
+			"item": [
+				{
+					"name": "Create order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"orderId\": \"string122\",\n  \"customer\": \"6473351da457d81749073acd\",\n  \"createdAt\": \"2019-01-16\",\n  \"updatedAt\": \"2019-01-16\",\n  \"products\": [\"6471ac730d3df187e7fbf6d0\", \"6471ac730d3df187e7fbf6d0\", \"6471ac730d3df187e7fbf6d0\"],\n  \"status\" : \"active\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/order",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get order by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/order/6473563fe38c30b5f10f1a71",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"order",
+								"6473563fe38c30b5f10f1a71"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/order",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\" : \"647351071b72e2e4f2629f77\",\n    \"orderId\": \"UPDATE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/order",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/order/6473558e140756a3b489683a",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"order",
+								"6473558e140756a3b489683a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_AUTH_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/order/647351071b72e2e4f2629f77",
+							"host": [
+								"{{HOST_ADDRESS}}"
+							],
+							"port": "{{BROKER_PORT}}",
+							"path": [
+								"order",
+								"647351071b72e2e4f2629f77"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "helloworld",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/",
+					"host": [
+						"{{HOST_ADDRESS}}"
+					],
+					"port": "{{BROKER_PORT}}",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test user guard",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{USER_AUTH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/auth/test-user",
+					"host": [
+						"{{HOST_ADDRESS}}"
+					],
+					"port": "{{BROKER_PORT}}",
+					"path": [
+						"auth",
+						"test-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test admin guard",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ADMIN_AUTH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST_ADDRESS}}:{{BROKER_PORT}}/auth/test-admin",
+					"host": [
+						"{{HOST_ADDRESS}}"
+					],
+					"port": "{{BROKER_PORT}}",
+					"path": [
+						"auth",
+						"test-admin"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST_ADDRESS",
+			"value": "127.0.0.1",
+			"type": "string"
+		},
+		{
+			"key": "BROKER_PORT",
+			"value": "3000",
+			"type": "string"
+		},
+		{
+			"key": "USER_AUTH_TOKEN",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ADMIN_AUTH_TOKEN",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

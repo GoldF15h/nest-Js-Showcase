@@ -9,14 +9,10 @@ import {
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/auth.dto';
 import { AdminAuthGuard, UserAuthGuard } from './auth.guard';
-import { UsersService } from '../users/users.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private authService: AuthService,
-    private userService: UsersService,
-  ) {}
+  constructor(private authService: AuthService) {}
 
   @Post('login')
   signIn(@Body() signInDto: SignInDto) {
@@ -26,7 +22,7 @@ export class AuthController {
   @UseGuards(UserAuthGuard)
   @Get('profile')
   async getProfile(@Request() req) {
-    return await this.userService.getUserByUserName(req.user.username);
+    return await this.authService.getProfile(req.user.username);
   }
 
   @UseGuards(UserAuthGuard)

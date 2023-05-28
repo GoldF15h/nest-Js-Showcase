@@ -29,7 +29,7 @@ export class UserController {
   }
 
   // get user
-  @UseGuards(UserAuthGuard)
+  @UseGuards(AdminAuthGuard)
   @Get(':id')
   async getUser(@Param('id') id: string) {
     return await this.usersService.getUserById(id);
@@ -46,10 +46,7 @@ export class UserController {
   @UseGuards(AdminAuthGuard)
   @Put()
   async updateUser(@Body() updateUsersDto: UpdateUsersDto) {
-    return await this.usersService.updateUser(
-      updateUsersDto.id,
-      updateUsersDto,
-    );
+    return await this.usersService.updateUser(updateUsersDto);
   }
 
   // deleted user

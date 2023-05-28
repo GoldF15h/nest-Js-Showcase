@@ -81,7 +81,7 @@ export class UsersService {
     newUserData: UpdateUsersDto,
   ): Promise<Users> {
     try {
-      return this.userModel.findByIdAndUpdate(userId, newUserData, {
+      return await this.userModel.findByIdAndUpdate(userId, newUserData, {
         new: true,
       });
     } catch (error) {

@@ -3,16 +3,15 @@ import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UsersModule } from '../users/users.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
-    UsersModule,
     ClientsModule.register([
       {
         name: 'USER',
         transport: Transport.TCP,
+        options: { port: 3002 },
       },
     ]),
     JwtModule.registerAsync({
@@ -24,7 +23,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       inject: [ConfigService],
     }),
   ],
-  providers: [AuthService, UsersModule],
+  providers: [AuthService],
   controllers: [AuthController],
   exports: [AuthService],
 })

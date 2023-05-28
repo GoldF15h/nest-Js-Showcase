@@ -1,61 +1,75 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUsersDto, UpdateUsersDto } from './dto/users.dto';
-import { AdminAuthGuard, UserAuthGuard } from '../auth/auth.guard';
+import { EventPattern, RpcException } from '@nestjs/microservices';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly usersService: UsersService) {}
 
-  // create user
-  @Post()
-  async createUser(@Body() createUsersDto: CreateUsersDto) {
-    return await this.usersService.createUser(createUsersDto);
+  @EventPattern('user_create')
+  async createUser(createUsersDto: CreateUsersDto) {
+    try {
+      return await this.usersService.createUser(createUsersDto);
+    } catch (error) {
+      throw new RpcException(error.message);
+    }
   }
 
-  // create admin user
-  @Post('admin')
-  async createAdminUser(@Body() createUsersDto: CreateUsersDto) {
-    return await this.usersService.createAdminUser(createUsersDto);
+  @EventPattern('admin_create')
+  async createAdminUser(createUsersDto: CreateUsersDto) {
+    try {
+      return await this.usersService.createAdminUser(createUsersDto);
+    } catch (error) {
+      throw new RpcException(error.message);
+    }
   }
 
-  // get user
-  @UseGuards(UserAuthGuard)
-  @Get(':id')
-  async getUser(@Param('id') id: string) {
-    return await this.usersService.getUserById(id);
+  @EventPattern('user_get_by_id')
+  async getUser(id: string) {
+    try {
+      return await this.usersService.getUserById(id);
+    } catch (error) {
+      throw new RpcException(error.message);
+    }
   }
 
-  // get all user
-  @UseGuards(AdminAuthGuard)
-  @Get()
+  @EventPattern('user_get_all')
   async getAllUser() {
-    return await this.usersService.getAllUsers();
+    try {
+      return await this.usersService.getAllUsers();
+    } catch (error) {
+      throw new RpcException(error.message);
+    }
   }
 
-  // update user
-  @UseGuards(AdminAuthGuard)
-  @Put()
-  async updateUser(@Body() updateUsersDto: UpdateUsersDto) {
-    return await this.usersService.updateUser(
-      updateUsersDto.id,
-      updateUsersDto,
-    );
+  @EventPattern('user_update')
+  async updateUser(updateUsersDto: UpdateUsersDto) {
+    try {
+      return await this.usersService.updateUser(
+        updateUsersDto.id,
+        updateUsersDto,
+      );
+    } catch (error) {
+      throw new RpcException(error.message);
+    }
   }
 
-  // deleted user
-  @UseGuards(AdminAuthGuard)
-  @Delete(':id')
-  async deleteUser(@Param('id') id: string) {
-    return await this.usersService.deleteUserById(id);
+  @EventPattern('user_profile')
+  async getUserByUsername(username: string) {
+    try {
+      return await this.usersService.getUserByUserName(username);
+    } catch (error) {
+      throw new RpcException(error.message);
+    }
+  }
+
+  @EventPattern('user_delete')
+  async deleteUser(userId: string) {
+    try {
+      return await this.usersService.deleteUserById(userId);
+    } catch (error) {
+      throw new RpcException(error.message);
+    }
   }
 }

@@ -33,19 +33,17 @@ export class OrderController {
   @UseGuards(UserAuthGuard)
   @Get()
   async getAllOrders(@Request() req) {
-    if (req.user.role === 'user') return await this.orderService.getAllOrders();
-    if (req.user.role === 'admin')
+    if (req.user.role === 'user')
       return await this.orderService.getAllOrdersByID(req.user.sub);
+    if (req.user.role === 'admin')
+      return await this.orderService.getAllOrders();
     throw new NotFoundException();
   }
 
   @UseGuards(UserAuthGuard)
   @Put()
   async updateOrder(@Body() updateOrderDto: UpdateOrderDto) {
-    return await this.orderService.updateOrder(
-      updateOrderDto.id,
-      updateOrderDto,
-    );
+    return await this.orderService.updateOrder(updateOrderDto);
   }
 
   @UseGuards(UserAuthGuard)
