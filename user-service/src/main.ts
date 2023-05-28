@@ -9,6 +9,6 @@ async function bootstrap() {
       transport: Transport.TCP,
     },
   );
-  app.listen();
+  await app.listen();
 }
 bootstrap();

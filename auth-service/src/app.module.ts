@@ -13,8 +13,6 @@ import { AuthModule } from './modules/auth/auth.module';
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     MongooseModule.forRoot(process.env.MONGO_CONNECTION_STRING),
     UsersModule,
-    ProductModule,
-    OrderModule,
     AuthModule,
   ],
   controllers: [AppController],
