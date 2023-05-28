@@ -25,9 +25,6 @@ export class CreateOrderDto {
   @IsMongoId({ each: true })
   products: string[];
 
-  @IsBoolean()
-  isDeleted: boolean;
-
   @IsNotEmpty()
   @IsString()
   status: string;

@@ -40,6 +40,14 @@ export class OrderService {
     }
   }
 
+  async getAllOrdersByID(id: string) {
+    try {
+      return this.orderModel.find({ _id: id, isDeleted: false });
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
+  }
+
   async updateOrder(
     orderId: string,
     newOrderData: UpdateOrderDto,
@@ -48,6 +56,20 @@ export class OrderService {
       return this.orderModel.findByIdAndUpdate(orderId, newOrderData, {
         new: true,
       });
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async cancelOrderByUser(orderId: string, ownerId: string): Promise<Order> {
+    try {
+      return this.orderModel.findOneAndUpdate(
+        { _id: orderId, customer: ownerId },
+        { status: 'cancel' },
+        {
+          new: true,
+        },
+      );
     } catch (error) {
       throw new BadRequestException(error.message);
     }

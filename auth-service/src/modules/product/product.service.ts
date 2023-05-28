@@ -44,6 +44,14 @@ export class ProductService {
     }
   }
 
+  async getAllProductsByUsername(userName: string) {
+    try {
+      return this.productModel.find({ userName: userName, isDeleted: false });
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
+  }
+
   async updateProduct(
     productId: string,
     newProductData: UpdateProductDto,

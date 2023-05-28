@@ -28,6 +28,27 @@ export class UsersService {
     }
   }
 
+  async createAdminUser(
+    createUserDto: CreateUsersDto,
+  ): Promise<Types.ObjectId> {
+    try {
+      const existingUser = await this.userModel.findOne({
+        userName: createUserDto.userName,
+      });
+      if (existingUser) {
+        throw new BadRequestException('Username is already in use.');
+      }
+
+      const createdUser = new this.userModel({
+        ...createUserDto,
+        role: 'admin',
+      });
+      return (await createdUser.save())._id;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
   async getUserById(userId: string) {
     try {
       return this.userModel.findOne(
@@ -41,10 +62,7 @@ export class UsersService {
 
   async getUserByUserName(userName: string) {
     try {
-      return this.userModel.findOne(
-        { userName, isDeleted: false },
-        '-_id -__v',
-      );
+      return this.userModel.findOne({ userName: userName, isDeleted: false });
     } catch (error) {
       throw new NotFoundException(error.message);
     }

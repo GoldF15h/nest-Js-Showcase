@@ -17,7 +17,7 @@ import { UsersModule } from '../users/users.module';
       inject: [ConfigService],
     }),
   ],
-  providers: [AuthService],
+  providers: [AuthService, UsersModule],
   controllers: [AuthController],
   exports: [AuthService],
 })

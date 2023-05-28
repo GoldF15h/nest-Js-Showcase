@@ -9,7 +9,9 @@ async function bootstrap() {
   }
   console.log(`app listening on port ${process.env.PORT}`);
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe({ disableErrorMessages: false }));
+  app.useGlobalPipes(
+    new ValidationPipe({ disableErrorMessages: false, whitelist: true }),
+  );
   await app.listen(process.env.PORT);
 }
 bootstrap();

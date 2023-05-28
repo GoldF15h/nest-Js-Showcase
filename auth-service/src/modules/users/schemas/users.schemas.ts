@@ -14,6 +14,9 @@ export class Users {
   @Prop()
   lastName: string;
 
+  @Prop({ default: 'user' })
+  role: string;
+
   @Prop()
   email: string;
 
